@@ -48,6 +48,8 @@ resource "aws_vpc_endpoint" "ec2messages" {
   vpc_id            = aws_vpc.my_vpc.id
   service_name      = "com.amazonaws.eu-west-1.ec2messages"
   vpc_endpoint_type = "Interface"
+  subnet_ids        = [aws_subnet.my_subnet.id]
+
 
   security_group_ids = [
     data.aws_security_group.default.id,
@@ -61,6 +63,7 @@ resource "aws_vpc_endpoint" "ssmmessages" {
   vpc_id            = aws_vpc.my_vpc.id
   service_name      = "com.amazonaws.eu-west-1.ssmmessages"
   vpc_endpoint_type = "Interface"
+  subnet_ids        = [aws_subnet.my_subnet.id]
 
   security_group_ids = [
     data.aws_security_group.default.id,
