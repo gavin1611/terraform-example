@@ -52,7 +52,7 @@ resource "aws_vpc_endpoint" "ec2messages" {
 
 
   security_group_ids = [
-    data.aws_security_group.default.id,
+    aws_default_security_group.default.id,
   ]
 
   private_dns_enabled = true
