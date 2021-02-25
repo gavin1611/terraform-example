@@ -17,6 +17,7 @@ resource "aws_instance" "my-new-ec2" {
   ami           = "ami-096f43ef67d75e998"
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.my_subnet.id
+  iam_instance_profile = "SSMInstanceProfile"
 
 
   tags = {
