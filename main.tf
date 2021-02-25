@@ -25,7 +25,8 @@ resource "aws_instance" "my-new-ec2" {
 }
 
 resource "aws_vpc" "my_vpc" {
-  cidr_block = "172.16.0.0/16"
+  cidr_block           = "172.16.0.0/16"
+  enable_dns_hostnames = true
 
   tags = {
     Name = "tf-example"
@@ -41,3 +42,23 @@ resource "aws_subnet" "my_subnet" {
     Name = "tf-example-subnet"
   }
 }
+
+
+resource "aws_vpc_endpoint" "ec2messages" {
+  vpc_id            = aws_vpc.my_vpc.id
+  service_name      = "com.amazonaws.eu-west-1.ec2messages"
+  vpc_endpoint_type = "Interface"
+
+  private_dns_enabled = true
+}
+
+
+resource "aws_vpc_endpoint" "ssmmessages" {
+  vpc_id            = aws_vpc.my_vpc.id
+  service_name      = "com.amazonaws.eu-west-1.ssmmessages"
+  vpc_endpoint_type = "Interface"
+
+  private_dns_enabled = true
+}
+
+
