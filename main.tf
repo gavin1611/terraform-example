@@ -52,7 +52,7 @@ resource "aws_vpc_endpoint" "ec2messages" {
 
 
   security_group_ids = [
-    data.aws_security_group.default.id,
+    aws_security_group.default.id,
   ]
 
   private_dns_enabled = true
@@ -66,13 +66,31 @@ resource "aws_vpc_endpoint" "ssmmessages" {
   subnet_ids        = [aws_subnet.my_subnet.id]
 
   security_group_ids = [
-    data.aws_security_group.default.id,
+    aws_security_group.default.id,
   ]
 
   private_dns_enabled = true
 }
 
 
-data "aws_security_group" "default" {
-  id = "sg-0f19dc0b0baa8daf8"
+resource "aws_security_group" "default" {
+  name        = "default security group"
+  description = "default SG"
+  vpc_id      = aws_vpc.my_vpc.id
+
+
+  ingress {
+    description = "All Traffic"
+    protocol    = "-1"
+    from_port   = 0
+    to_port     = 0
+    self        = true
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
